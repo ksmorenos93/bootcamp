@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "lab6/*": ["./src/*"]
+    }
+  }
+}

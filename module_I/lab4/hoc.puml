@@ -1,0 +1,15 @@
+@startuml
+actor User
+
+participant App
+participant WithAuth
+participant WrappedComponent
+
+User -> App : render()
+App -> WithAuth : WithAuth(WrappedComponent)
+WithAuth -> WrappedComponent : render(...props, extraProps)
+WrappedComponent -> WithAuth : render output
+WithAuth -> App : return EnhancedComponent
+App -> User : render EnhancedComponent
+
+@enduml

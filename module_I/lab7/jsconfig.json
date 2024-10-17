@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "lab7/*": ["./src/*"]
+    }
+  }
+}

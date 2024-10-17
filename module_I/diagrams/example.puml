@@ -1,0 +1,29 @@
+@startuml
+actor User
+participant "Frontend Application" as Frontend
+participant "Backend Service" as Backend
+participant "Database" as DB
+participant "JWT Service" as JWT
+
+User -> Frontend: Enter login credentials
+Frontend -> Backend: POST /api/v1/auth/login\n{email, password}
+Backend -> DB: VerifyUser(email, password)
+
+alt User exists and credentials are valid
+    DB --> Backend: UserVerified
+    Backend -> JWT: GenerateJWT(userId)
+    JWT --> Backend: JWTToken
+    Backend --> Frontend: 200 OK\n{access_token: JWTToken}
+    Frontend --> User: Login successful with JWT
+
+else User does not exist or invalid credentials
+    DB --> Backend: UserNotFound or InvalidCredentials
+    Backend --> Frontend: 401 Unauthorized\n{error: "Invalid credentials"}
+    Frontend --> User: Login failed: Invalid credentials
+end
+
+alt Invalid Input
+    Backend --> Frontend: 400 Bad Request\n{error: "Invalid input"}
+    Frontend --> User: Login failed: Invalid input
+end
+@enduml

@@ -1,0 +1,14 @@
+{
+  "name": "lab19",
+  "version": "1.0.0",
+  "description": "Big-O algorithm complex analysis.",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alejo8591/DWFSV2-115.git"
+  },
+  "private": true
+}

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app"></div>
+<script>
+  const products = [
+    { title: 'Mango', price: 11 },
+    { title: 'Cebolla', price: 20 },
+    { title: 'Ajo', price: 2 },
+    { title: 'Arroz', price: 20 },
+  ];
+  const app = document.getElementById('app');
+  const elements = products.map(product => {
+    return `<li>${product.title} - ${product.price}</li>`;
+  })
+  app.innerHTML = elements.join('');
+</script>
+</body>
+</html>

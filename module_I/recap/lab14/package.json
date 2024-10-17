@@ -1,0 +1,12 @@
+{
+  "name": "lab14",
+  "version": "1.0.0",
+  "main": "flat_flatmap.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

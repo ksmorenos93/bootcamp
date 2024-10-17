@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+<section id="children"></section>
+<script>
+  const products = [
+    {title: 'Mango', price: 11},
+    {title: 'Cebolla', price: 20},
+    {title: 'Ajo', price: 2},
+    {title: 'Arroz', price: 60},
+  ];
+  const children = document.getElementById('children');
+  products.forEach(product => {
+    children.innerHTML += `<li>${product.title} - ${product.price}</li>`;
+  })
+</script>
+
+</body>
