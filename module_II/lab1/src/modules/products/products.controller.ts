@@ -4,11 +4,11 @@ import {Product} from "./entities/product.entity";
 
 @Controller('products')
 export class ProductsController {
-    constructor(private readonly productsService: ProductsService) {
-    }
+  constructor(private readonly productsService: ProductsService) {
+  }
 
-    @Get()
-    getAllProducts(): Product[] {
-        return this.productsService.getAllProducts();
-    }
+  @Get()
+  getAllProducts(): Product[] {
+    return this.productsService.getAllProducts();
+  }
 }
