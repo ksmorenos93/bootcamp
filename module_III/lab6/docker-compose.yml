@@ -1,0 +1,67 @@
+services:
+  mongo_1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mongo_1
+    ports:
+      - 127.0.10.1:27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    command: ["--replSet", "rs0", "--keyFile", "/etc/mongo-keyfile", "--bind_ip_all", "--port", "27017"]
+    volumes:
+      - mongo1data:/data/db
+    healthcheck:
+      test: mongosh
+        -u $${MONGO_INITDB_ROOT_USERNAME}
+        -p $${MONGO_INITDB_ROOT_PASSWORD}
+        --eval "try { rs.status() } catch (err) { rs.initiate({_id:'rs0',members:[{_id:0,host:'mongo_1:27017',priority:1},{_id:1,host:'mongo_2:27017',priority:0.5},{_id:2,host:'mongo_3:27017',priority:0.5}]}) }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      start_interval: 1s
+      retries: 30
+    networks:
+      - bootcamp_network
+
+  mongo_2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mongo_2
+    ports:
+      - 127.0.10.2:27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    command: [ "--replSet", "rs0", "--keyFile", "/etc/mongo-keyfile", "--bind_ip_all", "--port", "27017" ]
+    volumes:
+      - mongo2data:/data/db
+    networks:
+      - bootcamp_network
+
+  mongo_3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mongo_3
+    ports:
+      - 127.0.10.3:27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    command: [ "--replSet", "rs0", "--keyFile", "/etc/mongo-keyfile", "--bind_ip_all", "--port", "27017" ]
+    volumes:
+      - mongo3data:/data/db
+    networks:
+      - bootcamp_network
+
+volumes:
+  mongo1data:
+  mongo2data:
+  mongo3data:
+
+networks:
+  bootcamp_network:
+    driver: bridge
