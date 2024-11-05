@@ -1,5 +1,4 @@
 import {createSlice} from "@reduxjs/toolkit";
-import { actionAsyncStorage } from "next/dist/client/components/action-async-storage-instance";
 
 const initialState = {
     divisor: 0,
@@ -18,7 +17,7 @@ export const operationsSlice = createSlice ({
         }, 
         getModule: (state, action) => {
             console.log (`getModule:action ${JSON.stringify(action)}`);
-            state.module = action.payload.divisor % 2;
+            state.module = action.payload.divisor % action.payload.dividend;
         }
     }
 });
