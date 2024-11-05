@@ -5,10 +5,12 @@ import { hash, compare } from 'bcryptjs';
 
 
 export interface User {
-  id: string;
-  username: string;
-  password: string;
-  roles: string[];
+  userId: string;
+  scoreId: string
+  game: string;
+  score: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 @Injectable()
@@ -17,16 +19,19 @@ export class UsersService {
   private users: User[] = [];
 
   constructor() {
+    console.log()
     this.generateMockData();
   }
 
   private generateMockData(): void {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 20; i++) {
       this.users.push({
-        id: uuidv4(),
-        username: faker.internet.userName(),
-        password: hash("holaMundo", 10),
-        roles: [faker.helpers.arrayElement(['player', 'admin'])]
+        userId: uuidv4(),
+        scoreId: uuidv4(),
+        game: faker.internet.domainWord(),
+        score: parseInt(faker.string.numeric({ length: { min: 5, max: 10 } })),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       });
     }
   }
@@ -36,10 +41,10 @@ export class UsersService {
   }
 
   validateUser(username: string, password: string) {
-    const user = this.users.find(user => user.username === username);
-    if (user && compare(password, user.password)) {
-      return user;
-    }
-    return null;
+    //const user = this.users.find(user => user.username === username);
+    //if (user && compare(password, user.password)) {
+      return {};
+    //}
+   // return null;
   }
 }

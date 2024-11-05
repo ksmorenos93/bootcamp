@@ -9,11 +9,11 @@ export class UsersController {
 
   constructor(private readonly usersService: UsersService) {}
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  //@Roles('admin')
   @Get()
   getAllUsers() {
-    return this.usersService.getAllUsers()
+    return this.usersService.getAllUsers();
   }
 
   @Get('hi')

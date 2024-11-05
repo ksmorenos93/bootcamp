@@ -2,13 +2,19 @@ import { Injectable } from '@nestjs/common';
 import {v4 as uuidv4} from 'uuid';
 import {faker} from '@faker-js/faker';
 import { PaginationQueryDto } from '../../commons/dto/pagination-query.dto';
+import { hash, compare } from 'bcryptjs';
 
 
 export interface User {
-  id: string;
+  userId: string;
   username: string;
+  name: string;
   email: string;
-  role: string;
+  password: string;
+  roles: string[];
+  avatar: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Paginator {
@@ -30,10 +36,15 @@ export class UsersService {
   private generateMockData(): void {
     for (let i = 0; i < 1000; i++) {
       this.users.push({
-        id: uuidv4(),
+        userId: uuidv4(),
         username: faker.internet.userName(),
+        password: hash("holaMundo", 10),
+        name: `${faker.person.firstName()} ${faker.person.lastName()}`,
         email: faker.internet.email(),
-        role: faker.helpers.arrayElement(['player', 'admin']),
+        avatar: faker.image.avatar(),
+        roles: [faker.helpers.arrayElement(['player', 'admin'])],
+        createdAt: new Date(),
+        updatedAt: new Date(),
       });
     }
   }

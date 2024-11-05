@@ -1,0 +1,8 @@
+
+services:
+  nestjs:
+    build:
+      context: ./scores
+    container_name: scores
+    ports:
+      - '3000:3000'
