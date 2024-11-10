@@ -1,0 +1,24 @@
+services:
+  mongo: 
+    image: mongo:latest 
+    container_name: mongodb
+    restart: always
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: root # esto es para definir un usuario en mongo, debe venir de una variabl de entorno algo como ${process.env.root}
+      MONGO_INITDB_ROOT_PASSWORD: example  # aqui defino el password
+    ports: 
+      - 27017:27017 # esto es para crear un puente entre nuestra maquina y el contenedor.
+
+    volumes:
+      - data:/data/db # a donde va a almacenar los datos, la persistencia de mis datos
+
+volumes: # elementos que requiera definicion los instancio dentro de mi docker para que lo tenga en cuenta mi aplicacion
+  data: {} # estos volumenes van anunciados a nivel general porque como tengo multiples servicios, pueden haber cosa 
+  # que son transversales, es decir por ejemplo en tre el backend y la base de datos. 
+  
+
+
+    
+
+
+  
