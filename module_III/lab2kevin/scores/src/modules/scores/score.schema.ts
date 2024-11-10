@@ -10,6 +10,9 @@ export class Score extends Document {
     @Prop({type:String, default:uuidv4})
     scoreId:string;
 
+    @Prop({type:Number, required: true})
+    score:number;
+
     @Prop({type:String, default:uuidv4})
     userId:string;
 

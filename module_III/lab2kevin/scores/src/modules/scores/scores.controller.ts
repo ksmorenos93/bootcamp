@@ -1,9 +1,9 @@
-import { Controller,Get, Post, Body, Param} from '@nestjs/common';
+import { Controller,Get, Post, Body, Param, Put, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import {ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {Score} from './score.schema';
 import {ScoresService} from './scores.service'
 import { CreateScoresDto } from './dto/create-score.dto';
-
+import { UpdateScoresDto } from './dto/update-score.dto';
 
 @ApiTags('Scores')
 @Controller('scores')
@@ -30,5 +30,22 @@ export class ScoresController {
     async getScoreById(@Param('scoreId')scoreId:string) {
         return this.scoresService.getScoreById(scoreId);
     }
+
+    @Put(':scoreId')
+    @ApiOperation({summary: 'update score by scoreId'})
+    @ApiResponse({status:200, description: 'update Score by scoreId', type: Score })
+    async updateScoreById(@Param('scoreId') scoreId:string,
+                          @Body() updateScoreDto:UpdateScoresDto) {
+        return this.scoresService.updateScoreById(scoreId, updateScoreDto);
+    }
+
+    @Delete(':scoreId')
+    @HttpCode(HttpStatus.NO_CONTENT)
+    @ApiOperation({summary: "Delete Score"})
+    @ApiResponse({status:204, description: 'Delete Score by ScoreId'})
+    async deleteScoreByID(@Param('scoreId') scoreId:string) {
+        return this.scoresService.deleteScoreById(scoreId);
+    }
+                        
 }
 
