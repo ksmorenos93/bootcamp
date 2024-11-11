@@ -1,0 +1,20 @@
+services: 
+  postgresql:
+    image: postgres:latest
+    container_name: postgresdb
+    restart: always
+    environment:
+      POSTGRES_USER: bootcampuser
+      POSTGRES_PASSWORD: bootcamppass
+      POSTGRES_DB: bootcamp
+
+    ports:
+      - 5432:5432
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+
+
