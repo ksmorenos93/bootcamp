@@ -1,0 +1,71 @@
+services:
+  nestjs:
+    build: # esto build se hace cuando hay proyectos que tienen configuraciones dentro del entorno donde se ejecuten.  por ejemplo game-score tiene adentro configuraciones especificas que ejecutan una pequeña aplicaion dentro.
+      context: ./game-score # es decir ademas de levantar la instancia de docker, tambien debo tener en cuenta lo que esta adentro.
+      dockerfile: Dockerfile #si tengo un build en un docker compose eso conlleva a que haya un dockerfile.
+    ports:
+      - "3027:3000"
+    environment:
+      DATABASE_URL: postgres://bootcampuser:bootcamppass@localhost:5432/game_score_db
+      MONGODB_URL: mongodb://bootcampuser:bootcamppass@localhost:27017/game_score_db
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      - db
+      - mongo
+      - redis
+    networks: # esto se refiere a que yo requiero que la red interna  de la arquitectura , las ips de los contenedores se van a comunicar entre si
+      - game_score # network lo que me permite es que todas las redes esten en elmismo grupo y las administra.
+  
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: bootcampuser
+      POSTGRES_PASSWORD: bootcamppass
+      POSTGRES_DB: game_score_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data # Donde guarda la instancia los datos, no son remotos esto se guarda donde se este ejecutando.
+    networks:
+      - game_score
+
+  mongo:
+    image: mongo:latest
+    command:  # este command, sirve para cuando yo quiero escalar una base de datos, entiendo la base de datos leyendo el log de eventos.
+      - '--logpath'
+      - '/var/log/mongodb/mongod.log'
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    networks:
+      - game_score
+
+  redis: # aqui no necesito volumne, porque esto almacena en la memoria ram que yo le defina en el docker. 
+    image: redis:alpine
+    ports:
+      - '6379:6379'
+    networks:
+      - game_score
+
+volumes: # esto es de manera global
+  postgres-data:  #estos los defini arriba
+  mongo-data:
+
+networks:
+  game_score:
+    driver: bridge
+
+
+
+      
+
+
+
+      
+
+

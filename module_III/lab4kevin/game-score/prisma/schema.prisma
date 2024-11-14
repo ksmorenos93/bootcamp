@@ -20,19 +20,21 @@ enum Status {
 }
 
 model User {
-    userId    String   @id @default(uuid())
-    email     String   @unique
-    name      String?
-    password  String
-    roles     Role[]   @relation("UserRoles")
-    status    Status   @default(ACTIVE)
-    avatar    String?
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+
+  userId      String    @id @default(uuid())
+  email       String    @unique
+  name        String?
+  password    String
+  roles       Role[]    @relation("UserRoles")
+  status      Status    @default(ACTIVE)
+  avatar      String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt       
 }
 
 model Role {
-    id    String  @id @default(uuid())
-    name  String  @unique
-    users User[]  @relation("UserRoles")
+  id    String  @id @default(uuid())
+  name  String  @unique
+  users User[]  @relation("UserRoles")
+
 }
